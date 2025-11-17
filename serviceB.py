@@ -3,14 +3,14 @@ from kafka import KafkaConsumer
 import json
 
 consumer = KafkaConsumer(
-    "user-events",
-    bootstrap_servers="localhost:9092",
-    auto_offset_reset="earliest",
-    value_deserializer=lambda v: json.loads(v.decode('utf-8')),
-    group_id="service-b"
+    'user-events',
+    bootstrap_servers=['localhost:9092','localhost:9093','localhost:9094'],
+    auto_offset_reset='earliest',
+    group_id='service-b',
+    value_deserializer=lambda m: json.loads(m.decode('utf-8'))
 )
 
-print("B waiting...")
+print("Service B listening...")
 
-for message in consumer:
-    print("Received:", message.value)
+for msg in consumer:
+    print("Received:", msg.value)
